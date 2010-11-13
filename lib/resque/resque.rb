@@ -20,7 +20,7 @@ module Resque
   def should_throttle?(klass, *args)
     return false if !throttle_job?(klass) || klass.disabled
     return true if key_found?(klass, *args)
-    redis.set(klass.key(*args), true, klass.can_run_every)
+    redis.setex(klass.key(*args), klass.can_run_every, true)
     return false
   end
 
