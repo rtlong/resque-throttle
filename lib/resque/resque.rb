@@ -8,7 +8,7 @@ module Resque
       
   def enqueue_with_throttle(klass, *args)
     if should_throttle?(klass, *args)
-      unless klass.settings[:silent]
+      unless klass.throttle_settings[:silent]
         raise(
           ThrottledError,
           "#{klass} with key #{klass.key(*args)} has exceeded it's throttle limit"

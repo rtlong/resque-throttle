@@ -8,12 +8,12 @@ module Resque
         :disabled      => false,
     }
 
-    def self.settings
-      @settings ||= THROTTLE_DEFAULTS.dup
+    def self.throttle_settings
+      @throttle_settings ||= THROTTLE_DEFAULTS.dup
     end
 
     def self.throttle(args = {})
-      settings.merge!(args)
+      throttle_settings.merge!(args)
     end
 
     def self.identifier(*args)
@@ -24,11 +24,11 @@ module Resque
     end
 
     def self.can_run_every
-      settings[:can_run_every]
+      throttle_settings[:can_run_every]
     end
 
     def self.disabled
-      settings[:disabled]
+      throttle_settings[:disabled]
     end
   end
 end
