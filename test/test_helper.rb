@@ -49,3 +49,11 @@ class DisabledThrottledJob < Resque::ThrottledJob
   def self.perform(some_id, some_other_thing)
   end
 end
+
+class SilentThrottledJob < Resque::ThrottledJob
+  @queue = :some_queue
+  throttle :silent => true
+  
+  def self.perform(some_id, some_other_thing)
+  end
+end
