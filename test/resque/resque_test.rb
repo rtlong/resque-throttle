@@ -32,6 +32,11 @@ class ResqueTest < Test::Unit::TestCase
         Resque.expects(:enqueue_without_throttle).twice
         2.times { Resque.enqueue(DisabledThrottledJob, @bogus_args) }
       end
+      
+      should "silently throttle a job if that's how resque-throttle is configured" do
+        Resque.expects(:enqueue_without_throttle).once
+        2.times { Resque.enqueue(SilentThrottledJob, @bogus_args) }
+      end
     end
   end
 end
