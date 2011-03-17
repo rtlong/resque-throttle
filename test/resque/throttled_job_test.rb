@@ -40,12 +40,17 @@ class ThrottledJobTest < Test::Unit::TestCase
     end
 
     context "#key" do
-      should "consist of the class name and the identifier" do
-        assert_equal "IdentifierThrottledJob:my_identifier", IdentifierThrottledJob.key("identifier")
+      should "consist of a prefix, the class name and the identifier" do
+        assert_equal(
+          "resque-throttle:IdentifierThrottledJob:my_identifier", 
+          IdentifierThrottledJob.key("identifier")
+        )
       end
 
-      should "consist of just the class name if the identifier is not provided" do
-        assert_equal "DefaultThrottledJob", DefaultThrottledJob.key
+      should "consist of just the module prefix and the class name if the identifier is not provided" do
+        assert_equal(
+          "resque-throttle:DefaultThrottledJob", DefaultThrottledJob.key
+        )
       end
     end
   end
